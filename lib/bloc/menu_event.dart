@@ -8,3 +8,7 @@ abstract class MenuEvent extends Equatable {
 class GoToWelcome extends MenuEvent {}
 
 class GoToEdit extends MenuEvent {}
+
+class GoToProfile extends MenuEvent {}
+
+class GoToSearch extends MenuEvent {}

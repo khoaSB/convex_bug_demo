@@ -9,6 +9,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Welcome Screen')),
       body: Container(
         alignment: Alignment.center,
         child: Text('Welcome Screen'),

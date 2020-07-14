@@ -11,13 +11,17 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   @override
   Stream<MenuState> mapEventToState(MenuEvent event) async* {
     if (event is GoToWelcome) {
-      yield* _mapGoToHome();
+      yield* _mapGoToWelcome();
     } else if (event is GoToEdit) {
       yield* _mapGoToEdit();
+    } else if (event is GoToProfile) {
+      yield* _mapGoToProfile();
+    } else if (event is GoToSearch) {
+      yield* _mapGoToSearch();
     }
   }
 
-  Stream<MenuState> _mapGoToHome() async* {
+  Stream<MenuState> _mapGoToWelcome() async* {
     convexKey.currentState.animateTo(0);
     yield AtWelcome();
   }
@@ -25,5 +29,15 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
   Stream<MenuState> _mapGoToEdit() async* {
     convexKey.currentState.animateTo(1);
     yield AtEdit();
+  }
+
+  Stream<MenuState> _mapGoToProfile() async* {
+    convexKey.currentState.animateTo(2);
+    yield AtProfile();
+  }
+
+  Stream<MenuState> _mapGoToSearch() async* {
+    convexKey.currentState.animateTo(3);
+    yield AtSearch();
   }
 }

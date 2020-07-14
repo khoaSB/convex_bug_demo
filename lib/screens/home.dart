@@ -2,6 +2,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:convex_bug_demo/bloc/menu_bloc.dart';
 import 'package:convex_bug_demo/key.dart';
 import 'package:convex_bug_demo/screens/edit.dart';
+import 'package:convex_bug_demo/screens/profile.dart';
+import 'package:convex_bug_demo/screens/search.dart';
 import 'package:convex_bug_demo/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,36 +14,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _appBar;
-  Widget _appBody;
-  MenuBloc _menuBloc;
+  Widget menuScreen;
+  MenuBloc menuBloc;
 
   List<TabItem> _tabItems = [
     TabItem(icon: Icons.home, title: 'Home'),
     TabItem(icon: Icons.edit, title: 'Edit'),
+    TabItem(icon: Icons.person, title: 'Profile'),
+    TabItem(icon: Icons.search, title: 'Search'),
   ];
 
   @override
   void initState() {
     super.initState();
-    _menuBloc = BlocProvider.of<MenuBloc>(context);
-    _appBar = welcomeScreenAppBar();
-    _appBody = welcomeScreenBody();
+    menuBloc = BlocProvider.of<MenuBloc>(context);
+    menuScreen = WelcomeScreen();
   }
 
-  void _changeScreen(int index) {
+  void changeScreen(int index) {
     switch (index) {
       case 0:
         _updateScreen(0);
-        _menuBloc.add(GoToWelcome());
+        menuBloc.add(GoToWelcome());
         break;
       case 1:
         _updateScreen(1);
-        _menuBloc.add(GoToEdit());
+        menuBloc.add(GoToEdit());
+        break;
+      case 2:
+        _updateScreen(2);
+        menuBloc.add(GoToProfile());
+        break;
+      case 3:
+        _updateScreen(3);
+        menuBloc.add(GoToSearch());
         break;
       default:
         _updateScreen(0);
-        _menuBloc.add(GoToWelcome());
+        menuBloc.add(GoToWelcome());
     }
   }
 
@@ -49,34 +59,21 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       switch (index) {
         case 0:
-          _appBar = welcomeScreenAppBar();
-          _appBody = welcomeScreenBody();
+          menuScreen = WelcomeScreen();
           break;
         case 1:
-          _appBar = editScreenAppBar();
-          _appBody = editScreenBody();
+          menuScreen = EditScreen();
+          break;
+        case 2:
+          menuScreen = ProfileScreen();
+          break;
+        case 3:
+          menuScreen = SearchScreen();
           break;
         default:
-          _appBar = welcomeScreenAppBar();
-          _appBody = welcomeScreenBody();
+          menuScreen = WelcomeScreen();
       }
     });
-  }
-
-  AppBar welcomeScreenAppBar() {
-    return AppBar(title: Text('Welcome Screen'));
-  }
-
-  Widget welcomeScreenBody() {
-    return WelcomeScreen();
-  }
-
-  AppBar editScreenAppBar() {
-    return AppBar(title: Text('Edit Screen'));
-  }
-
-  Widget editScreenBody() {
-    return EditScreen();
   }
 
   @override
@@ -87,16 +84,20 @@ class _HomeScreenState extends State<HomeScreen> {
           _updateScreen(0);
         } else if (state is AtEdit) {
           _updateScreen(1);
+        } else if (state is AtProfile) {
+          _updateScreen(2);
+        } else if (state is AtSearch) {
+          _updateScreen(3);
         }
       },
       child: Scaffold(
-        appBar: _appBar,
-        body: _appBody,
+        body: menuScreen,
         bottomNavigationBar: ConvexAppBar(
           key: convexKey,
+          initialActiveIndex: 2, // the bug happens when I add this line.
           style: TabStyle.react,
           items: _tabItems,
-          onTap: _changeScreen,
+          onTap: changeScreen,
         ),
       ),
     );

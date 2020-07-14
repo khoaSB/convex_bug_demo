@@ -21,7 +21,7 @@ class _EditScreenState extends State<EditScreen> {
     return TextFormField(
       controller: _textFieldController,
       decoration: InputDecoration(
-        hintText: 'Phone number',
+        hintText: 'Edit Screen',
         filled: true,
         border: OutlineInputBorder(),
       ),
@@ -41,6 +41,7 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Edit Screen')),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 48.0),
         child: Column(

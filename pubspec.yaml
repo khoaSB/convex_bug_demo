@@ -24,8 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^1.2.0
-  convex_bottom_bar: ^2.2.4
-  flutter_bloc: ^5.0.0
+  convex_bottom_bar: ^2.2.5
+  flutter_bloc: ^5.0.1
 
 dev_dependencies:
   flutter_test:

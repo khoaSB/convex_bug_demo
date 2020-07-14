@@ -10,3 +10,7 @@ abstract class MenuState extends Equatable {
 class AtWelcome extends MenuState {}
 
 class AtEdit extends MenuState {}
+
+class AtProfile extends MenuState {}
+
+class AtSearch extends MenuState {}
